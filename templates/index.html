@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Greenhouse Monitor</title>
+    <style>
+      body { font-family: sans-serif; text-align: center; padding-top: 50px; }
+      .alert { color: red; font-weight: bold; }
+    </style>
+  </head>
+  <body>
+    <h1>🌿 Greenhouse Environment</h1>
+    <p>Temperature: <span id="temp">--</span> °C</p>
+    <p>Light: <span id="light">--</span></p>
+    <p id="alert"></p>
+
+    <script>
+      async function refresh() {
+        const res = await fetch("/latest");
+        const data = await res.json();
+        document.getElementById("temp").innerText = data.temperature;
+        document.getElementById("light").innerText = data.light;
+        if (data.temperature < 10) {
+          document.getElementById("alert").innerText = "⚠️ Temperature too low!";
+        } else {
+          document.getElementById("alert").innerText = "";
+        }
+      }
+      setInterval(refresh, 2000);
+      refresh();
+    </script>
+  </body>
+</html>
