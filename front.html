@@ -1,0 +1,14 @@
+<h2>Greenhouse Light Level</h2>
+<p id="light"></p>
+
+<script>
+  async function fetchData() {
+    const res = await fetch("https://yourwebsite.com/latest");
+    const data = await res.json();
+    document.getElementById("light").innerText = data.light + " lux";
+    
+    // optional: browser notification
+    if (data.light < 300) alert("⚠️ Light below threshold!");
+  }
+  setInterval(fetchData, 3000);
+</script>
